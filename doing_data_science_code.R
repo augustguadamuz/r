@@ -37,7 +37,6 @@ summaryBy(Gender+Signed_In+Impressions+Clicks~agecat, data = data1)
 # Plot the distributions of number impressions and CTR for the 6 age categories
 
 
-
 # Define a new variable to segment or categorize users based on their click behavior
 
 
