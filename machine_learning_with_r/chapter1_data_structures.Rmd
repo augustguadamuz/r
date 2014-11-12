@@ -1,0 +1,144 @@
+---
+title: "Doing Data Science Chapter 1"
+author: "August Guadamuz"
+date: "Tuesday, November 11, 2014"
+output: html_document
+---
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+# Vectors
+# Fundamental data structure in R
+# A vector stores an ordered set of values called elements
+# All elements must be of the same type
+
+# Let's construct a set of data containing data on three medical patients
+# Create a vector named subject_name which contains three patient names, 
+# a numeric vector named temperature, and a logical vector named flu_status
+
+# first I am going to clear any existing data from the environment
+rm(list=ls())
+
+subject_name <- c("John Doe", "Jane Doe", "Steve Graves")
+temperature <- c(98.1, 98.6, 101.4)
+flu_status <- c(FALSE, FALSE, TRUE)
+
+# to obtain the body temperature for element 2 (Jane Doe)
+
+temperature[2]
+
+# to obtain the body temperature of Jane Doe and Seteve Graves
+
+temperature[2:3]
+
+# get John and Steve's temperature by excluding Jane
+
+temperature[-2]
+
+# It is sometimes useful to specify a logical vector indicating 
+# whether each item should be included. For example, to inlclude the first 
+# two temperature readings but exclude the third:
+
+temperature[c(TRUE, TRUE, FALSE)]
+
+```
+
+```{r}
+# Factors
+# Features that represent a characteristic with categories of values
+# are known as 'nominal'. A factor is a special case of vector that 
+# is used solely for representing nominal variables
+
+# to create a factor from a charater vector, simply apply the
+# factor() function
+
+gender <- factor(c("MALE", "FEMALE", "MALE"))
+
+gender
+
+# Let's add another factor for blood type
+
+blood <- factor(c("O", "AB", "A"),
+                levels = c("A", "B", "AB", "O"))
+
+blood
+```
+
+```{r}
+# Lists
+# Lists are used for storing ordered sets of values
+# Lists allow for different types of values to be collected (unlike vectors)
+
+# Let's create a list for John Doe so we can see his data without 
+# having to list out each data value (e.g., blood, flu_staus) each time
+
+subject1 <- list(fullname = subject_name[1], 
+                 temperature = temperature[1],
+                 flu_status = flu_status[1],
+                 gender = gender[1], 
+                 blood = blood[1])
+
+# Printing the patient's data is now a single command
+
+subject1
+```
+
+```{r}
+# Data Frame
+# Data frames are analagous to spreadsheets or databases as they 
+# contain rows and columns of data
+
+# Let's create a data frame for for our paient data set
+
+pt_data <- data.frame(subject_name, temperature, flu_status, gender, blood, stringsAsfactors = FALSE)
+
+# stringsAsfactors = FALSE prevents R from converting every character
+# vector to a factor
+
+# Our data looks like database or spreadsheet output now
+pt_data
+
+# Now we can pull vectors
+
+pt_data$subject_name
+
+# Similar to lists, a vector of names can be used to extract
+# several columns from a data frame
+
+pt_data[c("temperature", "flu_status")]
+
+# we could also use numbers to identify the columns we want
+
+pt_data[2:3]
+
+# We can pull data by specifying the row and column
+
+pt_data[1,2]
+```
+```{r}
+# Matrix
+# A matrix is a data structure that represents a two-dimensional table
+# with rows and columns of data
+
+# Let's create a 2X2 matrix with the first four letters of the alphabet
+
+m <- matrix(c('a', 'b', 'c', 'd'), nrow = 2)
+
+m
+```
+
