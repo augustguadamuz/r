@@ -1,0 +1,84 @@
+---
+title: "Exploring and Understanding Data"
+author: "August Guadamuz"
+date: "Sunday, November 16, 2014"
+output: html_document
+---
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+# Exploring and Understanding Data
+
+# first I am going to clear any existing data from the environment
+rm(list=ls())
+
+usedcars <- read.csv("C:/Users/augustg/Documents/R/r/machine_learning_with_r/2148OS_code/chapter 2/usedcars.csv", stringsAsFactors = FALSE)
+
+# Look at the structure of the data
+
+str(usedcars)
+
+# Let's look at the summary statistics for the "year" feature
+
+summary(usedcars$year)
+
+# We can look at the summary statistics for several numeric variables at the same time
+
+summary(usedcars[c("price", "mileage")])
+
+# We can perform basic math functions
+
+(36000 + 44000 + 56000)/3
+
+mean(c(36000, 44000, 56000))
+
+median(c(36000, 44000, 56000))
+
+range(usedcars$mileage)
+diff(range(usedcars$mileage))
+diff(range(usedcars$price))
+
+# Interquartile range (IQR)
+
+IQR(usedcars$price)
+
+# Generate quantiles
+quantile(usedcars$price)
+
+# If we specify an additional probs parameter using a vector denoting cut points
+# we can obtain arbitrary quantiles
+
+quantile(usedcars$price, probs = c(0.01, 0.99))
+
+# The sequence function seq() is used for generating
+# vectors of evenly spaced values. This makes it easy to obtain 
+# other slices of data, such as the quintiles (five groups)
+
+quantile(usedcars$price, seq(from = 0, to = 1, by = 0.20))
+
+IQR(usedcars$mileage)
+
+summary(usedcars$mileage)
+
+``` 
+```{r}
+
+# Visualizing numeric variables -- boxplots
+
+```
+
