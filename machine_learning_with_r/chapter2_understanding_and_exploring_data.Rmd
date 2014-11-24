@@ -80,5 +80,35 @@ summary(usedcars$mileage)
 
 # Visualizing numeric variables -- boxplots
 
+# Clearing any exiting data from the environment
+rm(list=ls())
+
+# CTRL + L will clear the Console
+
+# Load the used car data
+
+usedcars <- read.csv("C:/Users/augustg/Documents/R/r/machine_learning_with_r/2148OS_code/chapter 2/usedcars.csv", stringsAsFactors = FALSE)
+
+# Let's take a look at a boxplot for the used car price and mileage data.
+
+boxplot(usedcars$price, main = "Boxplot of Used Car Prices", ylab = "Price ($)")
+boxplot(usedcars$mileage, main = "Boxplot of Used Car Mileage", ylab = "Odometer (mi.)")
+
+# Visualizing numeric variables -- Histograms
+
+hist(usedcars$price, main = "Histogram of Used Car Prices", xlab = "Price ($)")
+
+
+hist(usedcars$mileage, main = "Histogram of Used Car Mileage", xlab = "Odeometer (mi.)")
+
+# Let's look at the variance and standard deviation of the price and mileage variables.
+
+var(usedcars$price)
+sd(usedcars$price)
+
+var(usedcars$mileage)
+sd(usedcars$mileage)
+
+
 ```
 
