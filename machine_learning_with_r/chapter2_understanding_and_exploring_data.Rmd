@@ -111,4 +111,90 @@ sd(usedcars$mileage)
 
 
 ```
+```{r}
+# Exploring categorical variables
+# In contrast to numeric data, categorical data is examined
+# using tables rather than summary statistics
+# A table that presents a single categorical variable is known as a one-way table
+# The table() function can be used to generate one=way tables
+# for our used car data
+
+table(usedcars$year)
+table(usedcars$model)
+table(usedcars$color)
+
+# R can also perform the calculation of table proportions directly by using the prop.table() command on a table produced by the table() function
+
+model_table <- table(usedcars$model)
+prop.table(model_table)
+
+# Show the output of a prop.table() function
+# in percettages with a single decimal place
+
+color_table <- table(usedcars$color)
+color_pct <- prop.table(color_table) * 100
+round(color_pct, digits = 1)
+
+```
+
+```{r}
+
+# measuring central tendency
+# mode is commonly used for categorical variable
+# mean and median are not categorized for nominal variables
+
+# You cannot use the mode() function for nominal variables 
+mode(color_table) # will kick "numeric" as output
+
+```
+
+```{r}
+# Visualizing relationships -- scatterplots
+
+# Scatterplot is a diagram that visualizes a bivariate relationship
+
+# Examine the relationship between price and mileage
+# Y plane is the dependent variable (price)
+
+plot(x = usedcars$mileage, y = usedcars$price,
+     main = "Scatterplot of Price vs. Mileage",
+     xlab = "Used Car Odometer (mi.)",
+     ylab = "Used Car Price ($)")
+
+```
+```{r}
+
+# Examining relationships - two-way cross tablulations
+# To examine the relationship between two nominal variables
+# a two-way cross tabulation is used, also known as a
+# crosstab or contingency table
+
+# Examine the relationship between model and color
+
+# Install the gmodels package
+install.packages("gmodels")
+library(gmodels)
+
+# Simplify the data
+# Divide the 9 colors into two groups
+# Conservative or non-conservative
+
+usedcars$conservative <- usedcars$color %in% c("Black", "Gray", "Silver", "White")
+
+# The %in% operator returns TRUE or FALSE for each value in
+# the vector on the left-hand side of the operator
+# depending on whether the value is found on the right-hand
+# side, basically we are asking if the color is 
+# black, gray, silver, or white (TRUE/FALSE)
+
+table(usedcars$conservative)
+
+# Now, let's look at the cross-tabulation to see how the
+# proportion of conservative colored cars varies by model
+
+CrossTable(x = usedcars$model, y = usedcars$conservative)
+
+```
+
+
 
