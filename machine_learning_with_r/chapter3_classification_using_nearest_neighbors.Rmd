@@ -1,0 +1,89 @@
+---
+title: 'Chapter 3: Lazy Learning -- Classification Using Nearest Neighbors'
+author: "August Guadamuz"
+date: "Monday, December 29, 2014"
+output: html_document
+---
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+
+# first I am going to clear any existing data from the environment
+rm(list=ls())
+
+# pull in the data set
+wbcd <- read.csv("C:/Users/augustg/Documents/R/r/machine_learning_with_r/2148OS_code/chapter 3/wisc_bc_data.csv", stringsAsFactors = FALSE)
+
+#Let's look at the data structure
+
+str(wbcd)
+
+# We will drop the ID variable (they should always be excluded)
+# We will make a copy of the wbcd file and exclude the first column (ID)
+
+wbcd <- wbcd[-1]
+
+str(wbcd)
+
+# See how many of the results are benign and malignent
+table(wbcd$diagnosis)
+
+# We need to code the target feature as a factor
+# We will take this opportunity to give the B and M values
+# more informative labels using the labels parameter
+
+wbcd$diagnosis <- factor(wbcd$diagnosis, levels = c("B", "M"),
+                                                    labels = c("Benign", "Malignent"))
+
+# Look at the prop.table() output
+# Notice that the values have been relabeled
+
+round(prop.table(table(wbcd$diagnosis)) * 100, digits = 1)
+
+# At this point the remaining features are all numeric
+# Let's take a look at some of the features
+
+summary(wbcd[c("radius_mean", "area_mean", "smoothness_mean")])
+
+# kNN uses a distance formula and the mean values have rather large deltas; we need to normalize the data
+
+# Let's create a normalization fucntion
+
+normalize <- function(x) {return ((x - min(x)) / (max(x) - min(x)))}
+
+# Let's test the normalize function that we just created
+normalize(c(1,2,3,4,5))
+normalize(c(10,20,30,40,50))
+
+# The lapply() function takes a list and applies a function to each element of the list
+# We can use lapply() to apply normalize to each feature in our data frame
+
+wbcd_n <- as.data.frame(lapply(wbcd[2:31], normalize))
+# This command applies the normalize() function to columns 2 through 31 in the wbcd data frame
+# converts the resulting list to a data frame and assigns it the name wbcd_n
+# the _n is a reminder that the data has been normalized
+
+# Let's confirm that the transaction was applied correctly
+
+summary(wbcd_n$area_mean)
+
+
+
+
+```
+
